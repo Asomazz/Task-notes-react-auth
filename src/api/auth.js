@@ -6,7 +6,11 @@ const login = async (userInfo) => {
 };
 
 const register = async (userInfo) => {
-  const { data } = await instance.post("/auth/register", userInfo);
+  const formData = new FormData();
+  for (const key in userInfo) {
+    formData.append(key, userInfo[key]);
+  }
+  const { data } = await instance.post("/auth/register", formData);
   return data;
 };
 
