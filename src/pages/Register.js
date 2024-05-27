@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../api/auth";
+import UserContext from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
-
+  const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate();
   const { mutate } = useMutation({
     mutationKey: ["Register"],
     mutationFn: () => register(userInfo),
+    onSuccess: () => {
+      setUser(true);
+      navigate("/");
+    },
   });
 
   const handleChange = (e) => {
